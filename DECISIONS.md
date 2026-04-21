@@ -1,197 +1,238 @@
 # Decisions
 
-Bu dosya, proje boyunca alınan temel teknik ve mimari kararları özetler.
+This file summarizes the key technical and architectural decisions made throughout the project.
 
 ---
 
 ## 1) Project Positioning
-**Decision:** Repository, full BERT reproduction olarak değil, **Encoder-only Transformer educational foundation** olarak konumlandırılacaktır.
+
+**Decision:** The repository will be positioned not as a full BERT reproduction, but as an **Encoder-only Transformer educational foundation**.
 
 **Reasoning:**
-- Proje eğitim odaklıdır.
-- Öğrencilerin mimariyi anlaması, feature parity'den daha önemlidir.
-- “BERT'in yapabildiği her şeyi yapar” söylemi bu aşamada teknik olarak erken olurdu.
+
+* The project is education-focused.
+* Understanding the architecture is more important than feature parity.
+* Claiming “it does everything BERT does” would be technically premature at this stage.
 
 **Alternatives considered:**
-- Full BERT clone
-- Production-ready NLP library
+
+* Full BERT clone
+* Production-ready NLP library
 
 **Consequence:**
-- Scope kontrollü kalır.
-- Repo daha dürüst ve öğretici olur.
-- Geliştirme odağı mimari görünürlüğünde kalır.
+
+* Scope remains controlled.
+* The repository becomes more honest and educational.
+* Development focus stays on architectural visibility.
 
 **Status:** Confirmed
 
 ---
 
 ## 2) Start with Encoder-only Architecture
-**Decision:** İlk mimari olarak decoder-only yerine **encoder-only** yapı seçildi.
+
+**Decision:** As the initial architecture, **encoder-only** is chosen instead of decoder-only.
 
 **Reasoning:**
-- Encoder-only yapı öğrenme açısından daha temiz bir başlangıç sağlar.
-- Classification ve sentence-level understanding task'leri için uygundur.
-- Generation, sampling ve KV cache gibi ek karmaşıklıklar erken aşamada scope'u büyütürdü.
+
+* Encoder-only provides a cleaner starting point for learning.
+* It is suitable for classification and sentence-level understanding tasks.
+* Additional complexities such as generation, sampling, and KV cache would expand the scope too early.
 
 **Alternatives considered:**
-- Decoder-only architecture
-- Encoder-decoder architecture
+
+* Decoder-only architecture
+* Encoder-decoder architecture
 
 **Consequence:**
-- Mimari öğretimi daha sade hale gelir.
-- İlk downstream task olarak sequence classification seçimi doğal hale gelir.
+
+* Architectural teaching becomes simpler.
+* Choosing sequence classification as the first downstream task becomes natural.
 
 **Status:** Confirmed
 
 ---
 
 ## 3) Build from Scratch with PyTorch
-**Decision:** Core architecture, hazır high-level model sınıfları yerine **custom PyTorch modules** ile from scratch yazılacaktır.
+
+**Decision:** The core architecture will be written from scratch using **custom PyTorch modules**, instead of ready-made high-level model classes.
 
 **Reasoning:**
-- Amaç black-box kullanımı değil, mimari görünürlüğüdür.
-- Her bileşenin test edilip açıklanabilmesi istenmektedir.
-- Öğrenci katkısı için modüllerin okunabilir olması önemlidir.
+
+* The goal is not black-box usage, but architectural visibility.
+* Each component should be testable and explainable.
+* Readability is important for student contributions.
 
 **Alternatives considered:**
-- Hugging Face Transformers tabanlı wrapper yaklaşımı
-- Notebook-first prototyping
+
+* Hugging Face Transformers-based wrapper approach
+* Notebook-first prototyping
 
 **Consequence:**
-- Öğrenme değeri artar.
-- Kod miktarı artar ancak mimari şeffaflık kazanılır.
+
+* Learning value increases.
+* Code volume increases, but architectural transparency is gained.
 
 **Status:** Confirmed
 
 ---
 
 ## 4) Use uv + pyproject.toml + YAML
-**Decision:** Environment management için `uv`, proje yapılandırması için `pyproject.toml`, model/training ayarları için YAML kullanılacaktır.
+
+**Decision:** Use `uv` for environment management, `pyproject.toml` for project configuration, and YAML for model/training settings.
 
 **Reasoning:**
-- Modern Python proje yönetimi için temiz bir kurulum sağlar.
-- Proje metadata ile deneysel config değerlerini ayırmak daha doğrudur.
-- Öğrenciler için reproducible setup daha kolay hale gelir.
+
+* Provides a clean setup for modern Python project management.
+* Separating project metadata from experimental config values is more appropriate.
+* Makes reproducible setup easier for students.
 
 **Alternatives considered:**
-- `venv` + `requirements.txt`
-- Tek dosyada tüm config değerlerini tutmak
+
+* `venv` + `requirements.txt`
+* Keeping all config values in a single file
 
 **Consequence:**
-- Kurulum ve geliştirme akışı daha düzenli olur.
-- Config sistemi daha maintainable hale gelir.
+
+* Setup and development workflow become more organized.
+* Config system becomes more maintainable.
 
 **Status:** Confirmed
 
 ---
 
 ## 5) Modular OOP Design with Explicit Validation
-**Decision:** Kod, OOP tabanlı ve sorumlulukları ayrılmış modüller halinde yazılacaktır; input / shape validation açık şekilde yapılacaktır.
+
+**Decision:** Code will be written using OOP with separated responsibilities, and input/shape validation will be explicit.
 
 **Reasoning:**
-- Repo öğrenci katkısına açık olacak.
-- SRP, test edilebilirlik ve maintainability hedeflenmektedir.
-- Transformer implementasyonlarında hataların büyük kısmı shape seviyesinde olur.
+
+* The repository is open to student contributions.
+* SRP, testability, and maintainability are targeted.
+* Most errors in Transformer implementations occur at the shape level.
 
 **Alternatives considered:**
-- Tek dosyada hızlı prototip
-- Validation'sız sade forward akışı
+
+* Single-file rapid prototype
+* Simplified forward flow without validation
 
 **Consequence:**
-- Kod biraz daha verbose olur.
-- Ancak bakım, anlatım ve debugging ciddi biçimde kolaylaşır.
+
+* Code becomes slightly more verbose.
+* However, maintenance, explanation, and debugging become significantly easier.
 
 **Status:** Confirmed
 
 ---
 
 ## 6) Pooling as Strategy
-**Decision:** Pooling mantığı `BasePooling` contract'ı üzerinden ayrı stratejiler halinde modellenmiştir.
+
+**Decision:** Pooling logic is modeled as separate strategies through a `BasePooling` contract.
 
 **Reasoning:**
-- Mean / first-token / max gibi yaklaşımlar downstream task açısından karşılaştırılabilir olmalıdır.
-- Classification head, pooling mantığını içine gömmemelidir.
+
+* Approaches like mean / first-token / max should be comparable for downstream tasks.
+* Classification head should not embed pooling logic internally.
 
 **Alternatives considered:**
-- Head içine sabit pooling gömmek
-- Sadece mean pooling kullanmak
+
+* Embedding pooling directly into the head
+* Using only mean pooling
 
 **Consequence:**
-- Strategy Pattern benzeri genişleyebilir yapı kazanıldı.
-- Öğrenciler pooling davranışlarını daha rahat karşılaştırabilir.
+
+* A Strategy Pattern-like extensible structure is achieved.
+* Students can more easily compare pooling behaviors.
 
 **Status:** Confirmed
 
 ---
 
 ## 7) Separate Trainer and Metrics
-**Decision:** Training logic ile metric computation logic ayrı modüllerde tutulacaktır.
+
+**Decision:** Training logic and metric computation logic will be kept in separate modules.
 
 **Reasoning:**
-- Trainer yalnızca training/evaluation akışını yönetmelidir.
-- Accuracy ve gelecekteki metrikler bağımsız katmanda genişletilebilmelidir.
+
+* Trainer should only manage training/evaluation flow.
+* Accuracy and future metrics should be extendable independently.
 
 **Alternatives considered:**
-- Accuracy hesaplarını trainer içinde gömmek
+
+* Embedding accuracy computation inside the trainer
 
 **Consequence:**
-- `trainer.py` daha temiz kaldı.
-- `metrics.py` future extension için hazırlandı.
+
+* `trainer.py` remains cleaner.
+* `metrics.py` is prepared for future extension.
 
 **Status:** Confirmed
 
 ---
 
 ## 8) Full Model Builds Attention Mask Internally
-**Decision:** Full model, dışarıdan `padding_mask` alacak; attention seviyesinde kullanılacak 4D mask'i kendi içinde oluşturacaktır.
+
+**Decision:** The full model will accept a `padding_mask` externally and internally construct the 4D attention mask used at the attention level.
 
 **Reasoning:**
-- Kullanıcı API'sini sadeleştirir.
-- Padding semantics ile attention implementation detayını ayırır.
+
+* Simplifies the user API.
+* Separates padding semantics from attention implementation details.
 
 **Alternatives considered:**
-- Kullanıcının doğrudan 4D attention mask vermesi
+
+* Requiring users to directly provide a 4D attention mask
 
 **Consequence:**
-- Model kullanımı daha ergonomik hale gelir.
-- İç mask dönüşümleri merkezi hale gelir.
+
+* Model usage becomes more ergonomic.
+* Mask transformations are centralized internally.
 
 **Status:** Confirmed
 
 ---
 
 ## 9) Refactor to Subpackages Before Data/Training Expansion
-**Decision:** Core architecture tamamlandıktan sonra, training/data katmanı büyümeden önce subpackage refactor yapılacaktır.
+
+**Decision:** After completing the core architecture, a subpackage refactor will be performed before expanding the training/data layer.
 
 **Reasoning:**
-- Flat structure ilk aşamada öğretici olsa da ölçeklenebilir son yapı değildir.
-- `training/`, `layers/`, `models/`, `blocks/`, `factories/` ayrımı büyümeyi kolaylaştırır.
+
+* Flat structure is educational at first but not scalable.
+* Separation into `training/`, `layers/`, `models/`, `blocks/`, `factories/` supports growth.
 
 **Alternatives considered:**
-- Flat structure ile devam etmek
-- Daha en başta erken refactor yapmak
+
+* Continuing with a flat structure
+* Performing refactor too early
 
 **Consequence:**
-- Refactor kontrollü zamanda yapıldı.
-- Sonraki feature'lar daha temiz klasör yapısına eklenecek.
+
+* Refactor was done at a controlled time.
+* Future features will be added to a cleaner folder structure.
 
 **Status:** Confirmed
 
 ---
 
 ## 10) Student Contributions Should Extend, Not Destabilize, the Core
-**Decision:** Öğrenci katkıları, mümkün olduğunca core architecture'ı bozmak yerine data, experiment, evaluation ve docs alanlarında yönlendirilecektir.
+
+**Decision:** Student contributions should primarily extend data, experiment, evaluation, and docs areas instead of modifying the core architecture.
 
 **Reasoning:**
-- Çekirdek mimari şu an oturmuş durumda.
-- Aynı core dosyalara aynı anda çok kişi dokunursa repo dağılabilir.
-- Eğitim açısından önce sistemi anlamaları, sonra kontrollü alanlarda genişletmeleri daha doğru.
+
+* The core architecture is now stable.
+* Multiple people editing the same core files simultaneously may destabilize the repository.
+* Educationally, understanding first and then extending in controlled areas is more effective.
 
 **Alternatives considered:**
-- Core model dosyalarını doğrudan öğrencilere bölmek
+
+* Directly splitting core model files among students
 
 **Consequence:**
-- Merge conflict ve mimari bozulma riski azalır.
-- Öğrenci katkıları daha yönetilebilir hale gelir.
+
+* Risk of merge conflicts and architectural degradation is reduced.
+* Student contributions become more manageable.
 
 **Status:** Confirmed
+
