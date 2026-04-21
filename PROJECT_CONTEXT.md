@@ -1,141 +1,169 @@
 # Project Context
 
-Bu dosya, **Encoder-Only-Transformer** projesinin arka planını, kapsamını, teknik yönünü ve temel varsayımlarını açıklamak için hazırlanmıştır.
+This document is prepared to explain the background, scope, technical direction, and core assumptions of the **Encoder-Only-Transformer** project.
 
 ## 1. Project Title
+
 Encoder-Only-Transformer
 
 ## 2. Project Goal
-Bu projenin temel amacı, **Encoder-only Transformer** mimarisini sıfırdan, modüler ve öğretici bir şekilde inşa etmek; öğrencilerin hem mimariyi anlamasını hem de bu yapıyı sequence classification gibi görevlerde genişletebilmesini sağlamaktır.
+
+The main goal of this project is to build the **Encoder-only Transformer** architecture from scratch in a modular and educational manner, and to enable students both to understand the architecture and to extend this structure for tasks such as sequence classification.
 
 ## 3. Business / Use Case Context
-Bu proje bir **eğitim ve öğrenme repository**'sidir.
-Ana kullanım alanı:
-- AI / NLP / Transformer eğitimi veren eğitmenler
-- Encoder-only mimariyi anlamak isteyen öğrenciler
-- PyTorch ile from-scratch mimari görmek isteyen geliştiriciler
 
-Bu repository doğrudan production product geliştirmek için değil, **BERT-style encoder mantığını görünür kılmak** için tasarlanmıştır.
+This project is an **educational and learning repository**.
+Main use cases:
+
+* instructors providing AI / NLP / Transformer training
+* students who want to understand the encoder-only architecture
+* developers who want to see a from-scratch architecture with PyTorch
+
+This repository is not designed for direct production product development, but to **make the BERT-style encoder logic visible**.
 
 ## 4. Problem Statement
-Transformer tabanlı encoder modeller çoğu zaman hazır framework'ler üzerinden kullanılır. Bu da öğrencilerin:
-- attention mekanizmasını,
-- encoder block yapısını,
-- pooling ve classification ilişkisini,
-- modelin task pipeline'a nasıl bağlandığını
 
-yeterince görünür şekilde anlamasını zorlaştırır.
+Transformer-based encoder models are often used through ready-made frameworks. This makes it difficult for students to clearly understand:
 
-Bu proje, bu problemi çözmek için mimariyi **parça parça ve test odaklı** biçimde inşa eder.
+* the attention mechanism,
+* the encoder block structure,
+* the relationship between pooling and classification,
+* how the model is connected to the task pipeline
+
+This project solves this problem by building the architecture **piece by piece and in a test-driven manner**.
 
 ## 5. Target User
-- Encoder-only Transformer mimarisini derinlemesine öğrenmek isteyen öğrenciler
-- Teknik eğitim alan katılımcılar
-- Eğitmen gözetiminde feature geliştirecek student contributors
+
+* students who want to deeply learn the encoder-only Transformer architecture
+* participants in technical training
+* student contributors who will develop features under instructor supervision
 
 ## 6. Target Workflow
-Örnek workflow:
+
+Example workflow:
 
 **Input IDs → Embedding → Encoder → Pooling → Classification Head → Trainer / Metrics → Output**
 
-Detay akış:
-1. Token ID'ler modele girer.
-2. Token embeddings ve positional encoding uygulanır.
-3. Sequence, stacked encoder blokları içinden geçirilir.
-4. Pooling ile sequence-level representation çıkarılır.
-5. Classification head logits üretir.
-6. Trainer loss ve accuracy hesaplar.
-7. Sonuç, eğitim / evaluation sürecinde raporlanır.
+Detailed flow:
+
+1. Token IDs enter the model.
+2. Token embeddings and positional encoding are applied.
+3. The sequence is passed through stacked encoder blocks.
+4. A sequence-level representation is obtained via pooling.
+5. The classification head produces logits.
+6. The trainer calculates loss and accuracy.
+7. The result is reported during the training / evaluation process.
 
 ## 7. In Scope
-Bu proje kapsamında yapılacaklar:
-- Encoder-only Transformer mimarisinin from-scratch implementasyonu
-- Modüler PyTorch bileşenleri
-- Sequence classification pipeline
-- Trainer ve metric katmanı
-- Test odaklı geliştirme
-- Öğrenci contribution workflow'u
-- Küçük demo / experiment script'leri
+
+Within the scope of this project:
+
+* from-scratch implementation of the encoder-only Transformer architecture
+* modular PyTorch components
+* sequence classification pipeline
+* trainer and metric layer
+* test-driven development
+* student contribution workflow
+* small demo / experiment scripts
 
 ## 8. Out of Scope
-Bu proje kapsamında yapılmayacaklar:
-- Full BERT reproduction
-- Masked Language Modeling pretraining (ilk aşamada)
-- Large-scale distributed training
-- Production deployment
-- Heavy tokenizer research pipeline
-- Decoder-only generation
+
+Within the scope of this project, the following will not be included:
+
+* full BERT reproduction
+* masked language modeling pretraining (initial phase)
+* large-scale distributed training
+* production deployment
+* heavy tokenizer research pipeline
+* decoder-only generation
 
 ## 9. Input Types
-Projede şu input türleri kullanılacaktır:
-- Token ID tensörleri
-- Padding mask tensörleri
-- Gelecek aşamada basit text classification dataset örnekleri
+
+The following input types will be used in the project:
+
+* token ID tensors
+* padding mask tensors
+* simple text classification dataset examples in later stages
 
 ## 10. Expected Output
-Sistemin üretmesi beklenen çıktılar:
-- Classification logits
-- Attention weight'leri
-- Loss
-- Accuracy
-- Eğitim / evaluation özetleri
+
+The expected outputs of the system:
+
+* classification logits
+* attention weights
+* loss
+* accuracy
+* training / evaluation summaries
 
 ## 11. Technical Direction
+
 ### Planned components
-- Config loader
-- Input embedding katmanı
-- Attention katmanları
-- Feed-forward katmanı
-- Encoder block
-- Stacked encoder
-- Pooling stratejileri
-- Classification head
-- Full model
-- Trainer
-- Metrics
-- Future dataset / experiment scripts
+
+* config loader
+* input embedding layer
+* attention layers
+* feed-forward layer
+* encoder block
+* stacked encoder
+* pooling strategies
+* classification head
+* full model
+* trainer
+* metrics
+* future dataset / experiment scripts
 
 ### Initial tech choices
-- **Language:** Python 3.10
-- **Framework:** Custom PyTorch implementation
-- **Deep Learning Library:** PyTorch
-- **Config:** `pyproject.toml` + YAML
-- **Testing:** pytest
-- **Linting:** ruff
-- **Environment / dependency management:** uv
-- **Interface:** CLI / script-based
+
+* **Language:** Python 3.10
+* **Framework:** Custom PyTorch implementation
+* **Deep Learning Library:** PyTorch
+* **Config:** `pyproject.toml` + YAML
+* **Testing:** pytest
+* **Linting:** ruff
+* **Environment / dependency management:** uv
+* **Interface:** CLI / script-based
 
 ## 12. Constraints
-Projeyi etkileyen kısıtlar:
-- Eğitim odaklı olduğu için kod çok karmaşık olmamalı
-- Compute maliyeti düşük tutulmalı
-- Öğrenciler tarafından ayağa kaldırılabilir olmalı
-- Core mimari gereksiz dependency ile şişirilmemeli
-- Scope büyümesi kontrol altında tutulmalı
+
+Constraints affecting the project:
+
+* code should not become too complex due to educational focus
+* compute cost should be kept low
+* it should be runnable by students locally
+* the core architecture should not be bloated with unnecessary dependencies
+* scope growth should be controlled
 
 ## 13. Assumptions
-Projede başlangıçta kabul edilen varsayımlar:
-- Öğrenci temel Python ve OOP bilgisine sahiptir
-- Öğrenci pytest çalıştırabilir ve repo'yu lokalinde ayağa kaldırabilir
-- Sequence classification, ilk task olarak yeterince öğreticidir
-- Modüler tasarım, öğrenci katkılarını yönetmeyi kolaylaştıracaktır
+
+Initial assumptions in the project:
+
+* the student has basic Python and OOP knowledge
+* the student can run pytest and set up the repository locally
+* sequence classification is sufficiently educational as a first task
+* modular design will make it easier to manage student contributions
 
 ## 14. Risks
-Muhtemel riskler:
-- Scope creep
-- Öğrencilerin core mimariyi anlamadan genişletmeye çalışması
-- Aynı dosyalarda fazla çakışma nedeniyle merge conflict oluşması
-- Dokümantasyonun kodla birlikte güncellenmemesi
-- Eğitim repo'sunun gereksiz enterprise karmaşıklığına kayması
+
+Possible risks:
+
+* scope creep
+* students trying to extend without understanding the core architecture
+* merge conflicts due to too much overlap in the same files
+* documentation not being updated alongside code
+* the educational repository drifting into unnecessary enterprise-level complexity
 
 ## 15. Success Criteria
-Bu projenin başarılı sayılması için minimum kriterler:
-- Repo sıfırdan kurulup testler başarılı şekilde çalıştırılabiliyor olmalı
-- Encoder-only core mimari açıklanabilir ve incelenebilir olmalı
-- Sequence classification pipeline çalışıyor olmalı
-- Trainer + metrics akışı çalışıyor olmalı
-- Öğrenciler repo'yu anlatıp belirli feature'ları ekleyebilmeli
-- Repo, public learning resource olarak düzenli ve okunur görünmeli
+
+Minimum criteria for the project to be considered successful:
+
+* the repository can be set up from scratch and tests run successfully
+* the encoder-only core architecture is explainable and inspectable
+* the sequence classification pipeline is working
+* trainer + metrics flow is working
+* students can explain the repository and add certain features
+* the repository is clean, organized, and readable as a public learning resource
 
 ## 16. Notes
-Bu repository şu an için “BERT replacement” olarak değil, **BERT-style encoder systems için güçlü bir educational foundation** olarak konumlandırılmalıdır.
+
+This repository should currently be positioned not as a “BERT replacement”, but as a **strong educational foundation for BERT-style encoder systems**.
+
