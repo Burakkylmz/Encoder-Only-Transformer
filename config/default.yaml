@@ -1,0 +1,15 @@
+model:
+  vocab_size: 30000
+  max_seq_len: 128
+  d_model: 128
+  n_heads: 4
+  ff_hidden_dim: 256
+  dropout: 0.1
+  n_layers: 2
+  pad_token_id: 0
+
+training:
+  batch_size: 32
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  epochs: 5
