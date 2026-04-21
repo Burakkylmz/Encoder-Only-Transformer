@@ -1,363 +1,415 @@
 # Student Guide
 
-Bu rehber, **Encoder-Only-Transformer** projesinde çalışacak öğrenciler için hazırlanmıştır.
-Amaç yalnızca kod yazmak değil; mevcut sistemi anlayarak, kontrollü ve profesyonel bir şekilde katkı sunmaktır.
+This guide is prepared for students who will work on the **Encoder-Only-Transformer** project.
+The goal is not only to write code, but to understand the existing system and contribute in a controlled and professional manner.
 
 ---
 
-## 1. Bu projedeki rolünüz
+## 1. Your role in this project
 
-Bu proje, sıfırdan yazılmış bir **Encoder-only Transformer** öğrenme repository'sidir.
-Sizden beklenen şey doğrudan rastgele feature eklemek değildir.
+This project is a learning repository for an **Encoder-only Transformer** written from scratch.
+What is expected from you is not to directly add random features.
 
-Önce:
-- repository'yi ayağa kaldırmanız,
-- mevcut mimariyi anlamanız,
-- testleri çalıştırmanız,
-- sistemin nasıl çalıştığını teknik olarak anlatabilmeniz
+First, you are expected to:
 
-beklenir.
+* set up the repository locally,
+* understand the current architecture,
+* run the tests,
+* be able to technically explain how the system works
 
-Bundan sonra size atanmış feature alanlarında geliştirme yapmanız istenir.
+After that, you will be asked to develop features in your assigned areas.
 
 ---
 
-## 2. Sizden beklenen çalışma modeli
+## 2. Expected working model
 
-Bu projede şu sırayla ilerlemeniz beklenir:
+In this project, you are expected to proceed in the following order:
 
-### Aşama 1 — Repository'yi ayağa kaldır
-- Repo'yu clone et
-- `uv sync` çalıştır
-- testleri çalıştır
-- package yapısını incele
+### Phase 1 — Set up the repository
 
-### Aşama 2 — Sistemi anla
-Aşağıdaki akışı teknik olarak açıklayabilir hale gel:
+* Clone the repo
+* Run `uv sync`
+* Run the tests
+* Inspect the package structure
+
+### Phase 2 — Understand the system
+
+Be able to technically explain the following flow:
 
 `input_ids -> embeddings -> encoder -> pooling -> classification head -> trainer -> metrics`
 
-### Aşama 3 — Kısa walkthrough yap
-Eğitmene veya takım liderine şu başlıkları anlat:
-- Proje ne yapıyor?
-- Hangi klasör hangi sorumluluğu taşıyor?
-- Attention katmanı nasıl çalışıyor?
-- Pooling neden gerekli?
-- Trainer ve metrics nasıl bağlanıyor?
+### Phase 3 — Do a short walkthrough
 
-### Aşama 4 — Assigned feature üzerinde çalış
-Size atanan alan dışında core mimariye doğrudan müdahale etmeyin.
+Explain the following topics to your instructor or team lead:
 
-### Aşama 5 — Test + PR aç
-Yaptığınız iş:
-- test içermeli,
-- açıklanabilir olmalı,
-- kendi branch'inizde geliştirilmeli,
-- PR ile gönderilmelidir.
+* What does the project do?
+* Which folder has which responsibility?
+* How does the attention layer work?
+* Why is pooling necessary?
+* How are trainer and metrics connected?
+
+### Phase 4 — Work on your assigned feature
+
+Do not directly modify the core architecture outside your assigned area.
+
+### Phase 5 — Add tests + open PR
+
+Your work must:
+
+* include tests,
+* be explainable,
+* be developed in your own branch,
+* be submitted via a PR.
 
 ---
 
-## 3. Kurulum
+## 3. Setup
 
-### Gereksinimler
-- Python 3.10
-- `uv`
+### Requirements
+
+* Python 3.10
+* `uv`
 
 ### Setup
+
 ```bash
 uv sync
 ```
 
-### Testleri çalıştır
+### Run tests
+
 ```bash
 uv run pytest -v
 ```
 
 ### Lint
+
 ```bash
 uv run ruff check .
 ```
 
 ---
 
-## 4. Proje yapısını nasıl okuyacaksınız?
+## 4. How to read the project structure
 
 ### `config/`
-Config nesneleri, YAML loading ve validation burada yer alır.
+
+Config objects, YAML loading, and validation are located here.
 
 ### `layers/`
-En küçük mimari bileşenler burada bulunur:
-- embeddings
-- attention
-- feed forward
-- pooling
+
+The smallest architectural components are here:
+
+* embeddings
+* attention
+* feed forward
+* pooling
 
 ### `blocks/`
-Layer'ların birleştiği daha büyük yapı burada bulunur:
-- `EncoderBlock`
+
+Larger structures where layers are combined:
+
+* `EncoderBlock`
 
 ### `models/`
-Task-level ve model-level yapılar burada bulunur:
-- `Encoder`
-- `SequenceClassificationHead`
-- `EncoderForSequenceClassification`
+
+Task-level and model-level structures:
+
+* `Encoder`
+* `SequenceClassificationHead`
+* `EncoderForSequenceClassification`
 
 ### `factories/`
-Config tabanlı model kurulum mantığı burada bulunur.
+
+Config-based model construction logic.
 
 ### `training/`
-Training loop ve metrics burada bulunur.
+
+Training loop and metrics.
 
 ### `tests/`
-Her önemli modül için contract testleri burada bulunur.
+
+Contract tests for each important module.
 
 ---
 
-## 5. Bu projede nasıl düşünmeniz gerekiyor?
+## 5. How you should think in this project
 
-Bu repository'de amaç sadece “çalışan kod” yazmak değildir.
-Sizden şu sorulara cevap verebilen katkılar beklenir:
+The goal of this repository is not just to write “working code”.
+Your contributions are expected to answer the following questions:
 
-- Bu değişiklik neden gerekli?
-- Kodun sorumluluğu doğru yerde mi?
-- Test ekledim mi?
-- Mevcut mimariyi bozuyor muyum, yoksa genişletiyor muyum?
-- Bu katkıyı başka bir öğrenci okuyabilir mi?
-
----
-
-## 6. Zorunlu çalışma kuralları
-
-### 6.1 Doğrudan `main` branch üzerinde çalışmayın
-Her öğrenci kendi feature branch'i üzerinde çalışmalıdır.
-
-Örnek branch isimleri:
-- `feature/student-a-data-pipeline`
-- `feature/student-b-training-script`
-- `feature/student-c-metrics-docs`
-
-### 6.2 Anlamlı commit mesajı kullanın
-İyi örnekler:
-- `add batch collation for padded sequence classification data`
-- `implement experiment script for sequence classification training`
-- `extend metrics with macro f1 support`
-
-Kötü örnekler:
-- `update`
-- `fix`
-- `last version`
-
-### 6.3 Test eklemeden PR açmayın
-Yeni feature varsa test de olmalıdır.
-
-### 6.4 README / docs etkileniyorsa güncelleyin
-Kod değiştiyse dokümantasyon da güncellenmelidir.
-
-### 6.5 Core dosyalara izinsiz büyük müdahale yapmayın
-Özellikle şu dosyalara kontrollü yaklaşın:
-- `models/model.py`
-- `models/encoder.py`
-- `blocks/encoder_block.py`
-- `layers/attention.py`
-
-Bu dosyalarda büyük refactor veya davranış değişikliği gerekiyorsa önce tartışın.
+* Why is this change necessary?
+* Is the responsibility of the code in the correct place?
+* Did I add tests?
+* Am I breaking the existing architecture, or extending it?
+* Can another student read and understand this contribution?
 
 ---
 
-## 7. Kod standardı
+## 6. Mandatory working rules
 
-Bu projede aşağıdaki standart beklenir:
+### 6.1 Do not work directly on the `main` branch
 
-- Type hint kullan
-- OOP ve SRP'yi koru
-- Girdi validasyonu yap
-- Gereksiz abstraction ekleme
-- Private method'ları yalnızca gerçekten anlamlıysa kullan
-- Public class ve fonksiyonlara açıklayıcı docstring yaz
-- Şekil (`shape`) contract'larını açık tut
+Each student must work on their own feature branch.
 
-Bu projede hedef:
-**senior disiplin, gereksiz enterprise karmaşıklığı değil**
+Example branch names:
+
+* `feature/student-a-data-pipeline`
+* `feature/student-b-training-script`
+* `feature/student-c-metrics-docs`
+
+### 6.2 Use meaningful commit messages
+
+Good examples:
+
+* `add batch collation for padded sequence classification data`
+* `implement experiment script for sequence classification training`
+* `extend metrics with macro f1 support`
+
+Bad examples:
+
+* `update`
+* `fix`
+* `last version`
+
+### 6.3 Do not open a PR without adding tests
+
+If there is a new feature, there must also be tests.
+
+### 6.4 Update README / docs if affected
+
+If the code changes, documentation must also be updated.
+
+### 6.5 Do not make large unauthorized changes to core files
+
+Be especially careful with the following files:
+
+* `models/model.py`
+* `models/encoder.py`
+* `blocks/encoder_block.py`
+* `layers/attention.py`
+
+If a major refactor or behavioral change is required in these files, discuss it first.
 
 ---
 
-## 8. Öğrenci Görev Dağılımı — Encoder-Only-Transformer
+## 7. Code standard
 
-## Genel Bakış
+The following standards are expected in this project:
 
-Bu proje, modüler geliştirme, net sorumluluk dağılımı ve birlikte çalışma alışkanlığı kazandırmak amacıyla üç öğrenci arasında bölünmüştür.
+* Use type hints
+* Follow OOP and SRP
+* Validate inputs
+* Do not add unnecessary abstractions
+* Use private methods only if they are truly meaningful
+* Write descriptive docstrings for public classes and functions
+* Keep shape (`shape`) contracts explicit
 
-Her öğrenci belirli bir alt sistemden sorumludur. Amaç sadece kod yazmak değil, aynı zamanda yapılan tasarım kararlarını anlamak ve açıklayabilmektir.
+The goal in this project:
+**senior discipline, not unnecessary enterprise complexity**
 
 ---
 
-## Öğrenci A — Data / Input Pipeline
+## 8. Student Task Distribution — Encoder-Only-Transformer
 
-### Ana Görevler
-- `datasets.py` dosyasını implement et
-- `collate_fn` yaz
-- Padding stratejisi tasarla
-- Küçük bir toy dataset loader oluştur
+## Overview
 
-### Ek Görevler
+This project is divided among three students to promote modular development, clear responsibility distribution, and teamwork habits.
 
-#### 1. Dynamic vs Static Padding Karşılaştırması
-- Sabit `max_seq_len` padding uygula
-- Batch bazlı dynamic padding uygula
-- Kısa bir karşılaştırma yaz (performans, memory)
+Each student is responsible for a specific subsystem. The goal is not only to write code, but also to understand and explain the design decisions made.
 
-#### 2. Attention Mask Üretimi
-- `padding_mask` üret
-- (Opsiyonel) Attention uyumlu forma çevir:
+---
+
+## Student A — Data / Input Pipeline
+
+### Main Tasks
+
+* Implement `datasets.py`
+* Write `collate_fn`
+* Design a padding strategy
+* Create a small toy dataset loader
+
+### Additional Tasks
+
+#### 1. Dynamic vs Static Padding Comparison
+
+* Apply fixed `max_seq_len` padding
+* Apply batch-based dynamic padding
+* Write a short comparison (performance, memory)
+
+#### 2. Attention Mask Generation
+
+* Generate `padding_mask`
+* (Optional) Convert to attention-compatible format:
   `(batch_size, 1, 1, seq_len)`
 
-### Amaç
-Ham verinin modelin anlayabileceği forma nasıl dönüştüğünü anlamak.
+### Goal
+
+To understand how raw data is transformed into a format that the model can process.
 
 ---
 
-## Öğrenci B — Training Workflow / Experiments
+## Student B — Training Workflow / Experiments
 
-### Ana Görevler
-- `experiments/train_sequence_classification.py` yaz
-- Config üzerinden model kur
-- Checkpoint save/load implement et
-- Çalışan bir training loop oluştur
+### Main Tasks
 
-### Ek Görevler
+* Write `experiments/train_sequence_classification.py`
+* Build the model from config
+* Implement checkpoint save/load
+* Create a working training loop
 
-#### 1. Basit Logging
-- Her epoch için:
-  - loss
-  - accuracy
-- Console çıktısı ver
+### Additional Tasks
 
-Örnek:
+#### 1. Simple Logging
+
+* For each epoch:
+
+  * loss
+  * accuracy
+* Print to console
+
+Example:
+
 ```
 Epoch 1 | loss: 0.65 | acc: 0.72
 ```
 
-#### 2. Deterministic Training Opsiyonu
-- Reproducibility sağla:
-  - `torch.manual_seed(...)`
-- Opsiyonel config flag ekle
+#### 2. Deterministic Training Option
 
-### Amaç
-Bir modelin nasıl eğitildiğini, izlendiğini ve tekrar üretilebilir hale getirildiğini anlamak.
+* Ensure reproducibility:
+
+  * `torch.manual_seed(...)`
+* Add optional config flag
+
+### Goal
+
+To understand how a model is trained, monitored, and made reproducible.
 
 ---
 
-## Öğrenci C — Evaluation / Docs / Analysis
+## Student C — Evaluation / Docs / Analysis
 
-### Ana Görevler
-- `precision`, `recall`, `f1` implement et
-- Evaluation helper fonksiyonları yaz
-- Pooling yöntemlerini karşılaştır
-- README örneklerini geliştir
-- Architecture notları yaz
+### Main Tasks
 
-### Ek Görevler
+* Implement `precision`, `recall`, `f1`
+* Write evaluation helper functions
+* Compare pooling methods
+* Improve README examples
+* Write architecture notes
+
+### Additional Tasks
 
 #### 1. Confusion Matrix Utility
-- Torch veya numpy ile implement et
-- Prediction sonuçlarını matrix olarak üret
 
-#### 2. Mini Deney Raporu
-- Şunları karşılaştır:
-  - mean pooling
-  - max pooling
-  - CLS token
-- 1–2 sayfalık kısa rapor yaz
-- `docs/` klasörüne koy
+* Implement using Torch or NumPy
+* Generate matrix from prediction results
 
-### Amaç
-Model performansının nasıl ölçüldüğünü ve yorumlandığını anlamak.
+#### 2. Mini Experiment Report
 
----
+* Compare:
 
-## Genel Kurallar
+  * mean pooling
+  * max pooling
+  * CLS token
+* Write a short 1–2 page report
+* Place it under `docs/`
 
-- Her öğrenci ayrı bir branch üzerinde çalışmalıdır
-- `main` branch’e direkt commit atılmaz
-- Her feature şunları içermelidir:
-  - temiz kod
-  - type hint
-  - mümkünse test
-- Pull Request açılmalı ve review alınmalıdır
+### Goal
+
+To understand how model performance is measured and interpreted.
 
 ---
 
-## Beklenen Çıktı
+## General Rules
 
-Bu aşamanın sonunda:
-- Projede:
-  - çalışan bir data pipeline
-  - çalıştırılabilir bir training script
-  - doğru evaluation metrikleri olacak
-- Öğrenciler:
-  - pipeline’ın tamamını anlamış olacak
-  - gerçek bir codebase’e katkı sunmuş olacak
-  - ekip çalışması deneyimi kazanacak
+* Each student must work on a separate branch
+* No direct commits to the `main` branch
+* Each feature must include:
 
----
-
-## Son Not
-
-Öncelik sırası:
-- anlaşılabilirlik
-- doğruluk
-- modülerlik
-
-Hızlı yazılmış ama anlaşılmayan kodun hiçbir değeri yoktur.
-
-Bu çalışma sadece kod yazma değil, mühendislik pratiğidir.
+  * clean code
+  * type hints
+  * tests if possible
+* A Pull Request must be opened and reviewed
 
 ---
 
-## 9. Çalışmaya başlamadan önce yapmanız gereken kısa kontrol listesi
+## Expected Output
 
-Aşağıdaki soruların hepsine “evet” diyebiliyor olmalısınız:
+At the end of this phase:
 
-- Repo'yu lokalimde ayağa kaldırdım mı?
-- Testleri çalıştırdım mı?
-- Mimari akışı açıklayabiliyor muyum?
-- Hangi klasör hangi işi yapıyor biliyor muyum?
-- Bana atanan görev alanı net mi?
-- Hangi dosyaları değiştirmem gerektiğini biliyor muyum?
+* The project will have:
 
----
+  * a working data pipeline
+  * a runnable training script
+  * correct evaluation metrics
+* Students will:
 
-## 10. PR açmadan önce kontrol listesi
-
-- [ ] Branch'im doğru mu?
-- [ ] Değişiklik kapsamım atanan görev ile uyumlu mu?
-- [ ] Test ekledim mi?
-- [ ] Tüm testleri çalıştırdım mı?
-- [ ] Gerekli import ve package path'leri doğru mu?
-- [ ] Dokümantasyon etkileniyorsa güncelledim mi?
-- [ ] Commit mesajlarım anlamlı mı?
-- [ ] PR açıklamam neyi neden yaptığımı anlatıyor mu?
+  * understand the full pipeline
+  * have contributed to a real codebase
+  * gain teamwork experience
 
 ---
 
-## 11. Bu projede kaçınmanız gereken şeyler
+## Final Note
 
-- Aynı anda çok fazla dosyayı rastgele değiştirmek
-- Çekirdek mimariyi anlamadan refactor yapmak
-- Testsiz geliştirme
-- README / docs güncellemeden feature eklemek
-- Hazır internet kodunu yapıştırıp mantığını açıklayamamak
-- “Çalışıyor gibi” ama contract'ı bozan değişiklikler
+Priority order:
+
+* clarity
+* correctness
+* modularity
+
+Fast-written but unclear code has no value.
+
+This work is not just coding, it is an engineering practice.
 
 ---
 
-## 12. Sizden gerçekten beklenen şey
+## 9. Pre-work checklist
 
-Bu projede amaç yalnızca “bir feature eklemek” değildir.
-Sizden beklenen:
-- mevcut sistemi anlamanız,
-- teknik olarak anlatmanız,
-- kontrollü bir şekilde genişletmeniz,
-- profesyonel GitHub çalışma disiplini göstermenizdir.
+You should be able to answer “yes” to all of the following:
 
-Bu repository bir ödev deposu gibi değil, küçük ölçekli bir **mentored engineering project** gibi ele alınmalıdır.
+* Did I set up the repo locally?
+* Did I run the tests?
+* Can I explain the architectural flow?
+* Do I know which folder does what?
+* Is my assigned task area clear?
+* Do I know which files I need to modify?
+
+---
+
+## 10. Pre-PR checklist
+
+* [ ] Is my branch correct?
+* [ ] Is my change aligned with my assigned task?
+* [ ] Did I add tests?
+* [ ] Did I run all tests?
+* [ ] Are imports and package paths correct?
+* [ ] Did I update documentation if needed?
+* [ ] Are my commit messages meaningful?
+* [ ] Does my PR description explain what and why?
+
+---
+
+## 11. Things to avoid in this project
+
+* Changing too many files randomly at once
+* Refactoring without understanding the core architecture
+* Developing without tests
+* Adding features without updating README / docs
+* Copy-pasting code from the internet without understanding it
+* Making changes that “seem to work” but break contracts
+
+---
+
+## 12. What is truly expected from you
+
+The goal in this project is not only to “add a feature”.
+What is expected from you:
+
+* understand the existing system,
+* explain it technically,
+* extend it in a controlled way,
+* demonstrate professional GitHub workflow discipline
+
+This repository should be treated not as a homework repo, but as a small-scale **mentored engineering project**.
+
