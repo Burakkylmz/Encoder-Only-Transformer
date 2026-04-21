@@ -1,149 +1,149 @@
 # Encoder-Only-Transformer
 
-**Encoder-only Transformer** mimarisini **from scratch** ve **step by step** inşa etmeyi amaçlayan eğitici bir projedir.
+This is an educational project that aims to build the **Encoder-only Transformer** architecture **from scratch** and **step by step**.
 
-Bu repository’nin amacı, mimariyi sadece kullanmak değil; bileşenlerini tek tek kurarak gerçekten anlamaktır. Proje, **clean code**, **modular design**, test odaklı geliştirme ve öğretici anlatım yaklaşımıyla hazırlanmıştır.
-
----
-
-## İçindekiler
-
-- [Proje Özeti](#proje-özeti)
-- [Bu Proje Neden Var](#bu-proje-neden-var)
-- [Projenin Amaçları](#projenin-amaçları)
-- [Kapsam](#kapsam)
-- [Kapsam Dışı Olanlar](#kapsam-dışı-olanlar)
-- [Mevcut Durum](#mevcut-durum)
-- [Repository Yapısı](#repository-yapısı)
-- [Kurulum](#kurulum)
-- [Configuration](#configuration)
-- [Nasıl Çalışır](#nasıl-çalışır)
-- [Geliştirme Yaklaşımı](#geliştirme-yaklaşımı)
-- [Öğrenci / Contributor Workflow](#öğrenci--contributor-workflow)
-- [Roadmap](#roadmap)
-- [Kimler İçin Uygun](#kimler-için-uygun)
-- [Katkı](#katkı)
-- [Lisans](#lisans)
+The purpose of this repository is not just to use the architecture, but to truly understand it by constructing its components one by one. The project is designed with a **clean code**, **modular design**, test-driven development, and instructional explanation approach.
 
 ---
 
-## Proje Özeti
+## Table of Contents
 
-Transformer tabanlı modeller bugün NLP dünyasının temel yapı taşlarından biridir. Ancak pratikte bu mimariler çoğu zaman hazır kütüphaneler üzerinden kullanıldığı için modelin iç mekanizması yeterince görünür olmaz.
-
-Bu proje, **Encoder-only Transformer** mimarisini bir **black box** gibi kullanmak yerine, onu bileşenlerine ayırarak adım adım inşa etmeyi hedefler.
-
-Buradaki ana fikir şudur:
-
-> Bir mimariyi gerçekten anlamanın en iyi yollarından biri, onu kontrollü kapsamla sıfırdan kurmaktır.
-
-Bu yüzden bu repository’nin amacı sadece çalışan bir model üretmek değil, aynı zamanda şu sorulara net cevap verebilmektir:
-
-- **Token Embedding** neden gereklidir?
-- **Positional Encoding** neden eklenir?
-- **Self-Attention** nasıl çalışır?
-- **Multi-Head Attention** neden tek bir attention mekanizmasından daha güçlüdür?
-- **Encoder Block** nasıl oluşur?
-- **Stacked Encoder** nasıl kurulur?
-- **Pooling** neden gerekir?
-- Bir **Encoder-only Transformer**, sequence classification task’lerinde nasıl kullanılır?
-- Bu mimari etrafında temiz ve test edilebilir bir kod tabanı nasıl kurulur?
+* [Project Overview](#project-overview)
+* [Why This Project Exists](#why-this-project-exists)
+* [Project Goals](#project-goals)
+* [Scope](#scope)
+* [Out of Scope](#out-of-scope)
+* [Current Status](#current-status)
+* [Repository Structure](#repository-structure)
+* [Setup](#setup)
+* [Configuration](#configuration)
+* [How It Works](#how-it-works)
+* [Development Approach](#development-approach)
+* [Student / Contributor Workflow](#student--contributor-workflow)
+* [Roadmap](#roadmap)
+* [Who Is It For](#who-is-it-for)
+* [Contribution](#contribution)
+* [License](#license)
 
 ---
 
-## Bu Proje Neden Var
+## Project Overview
 
-Bugün birçok geliştirici **Transformer** mimarisini kullanıyor, ancak daha az kişi onun iç yapısını gerçekten açıklayabiliyor.
+Transformer-based models are one of the fundamental building blocks of the NLP world today. However, in practice, these architectures are often used through ready-made libraries, which makes the internal mechanism of the model insufficiently visible.
 
-Hazır framework’ler güçlü olsa da öğrenme sürecinde şu sorunları doğurabilir:
+This project aims to build the **Encoder-only Transformer** architecture step by step by breaking it down into its components, instead of using it as a **black box**.
 
-- model çalışır ama neden çalıştığı belirsiz kalır
-- bileşenler görünmez hale gelir
-- teori ile implementation arasındaki bağ zayıflar
-- learner, mimariyi tüketir ama içselleştiremez
+The main idea here is:
 
-Bu proje tam olarak bu noktada devreye girer.
+> One of the best ways to truly understand an architecture is to build it from scratch within a controlled scope.
 
-Amaç:
+Therefore, the goal of this repository is not only to produce a working model, but also to clearly answer the following questions:
 
-- mimariyi görünür hale getirmek
-- her bileşeni ayrı ayrı anlamak
-- teoriyi doğrudan kod ile ilişkilendirmek
-- öğrencinin modeli sadece kullanmasını değil, açıklayabilmesini sağlamak
-- küçük ama ciddi bir AI engineering codebase disiplini göstermek
-
----
-
-## Projenin Amaçları
-
-Bu proje şunları hedefler:
-
-- **Encoder-only Transformer** mimarisini **from scratch** inşa etmek
-- her ana bileşeni bağımsız ve modüler şekilde geliştirmek
-- mimarinin yalnızca “ne yaptığını” değil, “neden var olduğunu” da açıklamak
-- teorik bilgiyi doğrudan implementation ile bağlamak
-- öğrenciler, geliştiriciler ve eğitmenler için açık bir öğrenme kaynağı oluşturmak
-- public olarak incelenebilecek temiz, testli ve öğretici bir GitHub projesi ortaya koymak
+* Why is **Token Embedding** necessary?
+* Why is **Positional Encoding** added?
+* How does **Self-Attention** work?
+* Why is **Multi-Head Attention** more powerful than a single attention mechanism?
+* How is an **Encoder Block** formed?
+* How is a **Stacked Encoder** built?
+* Why is **Pooling** needed?
+* How is an **Encoder-only Transformer** used in sequence classification tasks?
+* How is a clean and testable codebase built around this architecture?
 
 ---
 
-## Kapsam
+## Why This Project Exists
 
-Bu repository’nin temel odağı **Encoder-only Transformer** mimarisidir.
+Today, many developers use the **Transformer** architecture, but fewer can truly explain its internal structure.
 
-Mevcut ve hedeflenen ana bileşenler:
+Although ready-made frameworks are powerful, they can create the following issues during the learning process:
 
-- **Token Embedding**
-- **Positional Encoding**
-- **Scaled Dot-Product Attention**
-- **Self-Attention**
-- **Feed Forward Network**
-- **Encoder Block**
-- **Stacked Encoder**
-- **Pooling**
-- **Sequence Classification Head**
-- **Full Encoder-based Classification Model**
-- **Factory Pattern** ile model üretimi
-- **Trainer**
-- **Metrics**
+* the model works, but it is unclear why it works
+* components become invisible
+* the connection between theory and implementation weakens
+* the learner uses the architecture but cannot internalize it
 
-Bu yapı, küçük ama anlamlı **text understanding** ve **sequence classification** task’leri için temel oluşturur.
+This project addresses exactly this point.
 
----
+The goal:
 
-## Kapsam Dışı Olanlar
-
-Bu repository’nin mevcut aşamasında bilinçli olarak kapsama alınmayan konular:
-
-- **Decoder-only generation**
-- **Large-scale pretraining**
-- **Full BERT reproduction**
-- **Masked Language Modeling**
-- **Advanced tokenizer training**
-- **Production deployment**
-- çok büyük dataset ve çok maliyetli training pipeline’ları
-
-Bu karar bilinçlidir. Bu repo bir “everything NLP framework” değil, kontrollü kapsamlı bir **öğrenme laboratuvarı**dır.
+* to make the architecture visible
+* to understand each component individually
+* to directly connect theory with code
+* to enable the learner not only to use the model but also to explain it
+* to demonstrate a small but serious AI engineering codebase discipline
 
 ---
 
-## Mevcut Durum
+## Project Goals
 
-Şu anda repository şu seviyeye ulaşmıştır:
+This project aims to:
 
-- modüler **Encoder-only architecture core** kurulmuştur
-- ana bileşenler ayrı katmanlar halinde yazılmıştır
-- **SequenceClassificationHead** ve tam model akışı eklenmiştir
-- **Factory Pattern** ile model kurulum katmanı eklenmiştir
-- **trainer.py** ve **metrics.py** ile training foundation oluşturulmuştur
-- klasör yapısı refactor edilerek daha ölçeklenebilir hale getirilmiştir
-- kapsamlı **unit test** yapısı kurulmuştur
-
-Başka bir deyişle: bu repo artık yalnızca mimari parçaların anlatıldığı bir taslak değil; **çalışan, test edilen ve genişletilebilir bir Encoder-only sequence classification foundation** haline gelmiştir.
+* build the **Encoder-only Transformer** architecture **from scratch**
+* develop each main component independently and modularly
+* explain not only “what” the architecture does, but also “why” it exists
+* connect theoretical knowledge directly with implementation
+* create a clear learning resource for students, developers, and instructors
+* produce a clean, tested, and educational GitHub project that can be publicly examined
 
 ---
 
-## Repository Yapısı
+## Scope
+
+The main focus of this repository is the **Encoder-only Transformer** architecture.
+
+The current and target main components include:
+
+* **Token Embedding**
+* **Positional Encoding**
+* **Scaled Dot-Product Attention**
+* **Self-Attention**
+* **Feed Forward Network**
+* **Encoder Block**
+* **Stacked Encoder**
+* **Pooling**
+* **Sequence Classification Head**
+* **Full Encoder-based Classification Model**
+* Model creation using **Factory Pattern**
+* **Trainer**
+* **Metrics**
+
+This structure forms a foundation for small but meaningful **text understanding** and **sequence classification** tasks.
+
+---
+
+## Out of Scope
+
+The following topics are intentionally excluded at the current stage of this repository:
+
+* **Decoder-only generation**
+* **Large-scale pretraining**
+* **Full BERT reproduction**
+* **Masked Language Modeling**
+* **Advanced tokenizer training**
+* **Production deployment**
+* very large datasets and high-cost training pipelines
+
+This decision is intentional. This repository is not an “everything NLP framework”, but a controlled-scope **learning laboratory**.
+
+---
+
+## Current Status
+
+At this point, the repository has reached the following level:
+
+* modular **Encoder-only architecture core** has been established
+* main components have been implemented as separate layers
+* **SequenceClassificationHead** and full model flow have been added
+* model construction layer using **Factory Pattern** has been added
+* training foundation has been established with **trainer.py** and **metrics.py**
+* folder structure has been refactored to be more scalable
+* comprehensive **unit test** structure has been established
+
+In other words: this repository is no longer just a draft explaining architectural pieces; it has become a **working, tested, and extensible Encoder-only sequence classification foundation**.
+
+---
+
+## Repository Structure
 
 ```text
 Encoder-Only-Transformer/
@@ -216,59 +216,59 @@ Encoder-Only-Transformer/
     └── test_trainer.py
 ```
 
-### Klasör Açıklamaları
+### Folder Descriptions
 
-- `config/`  
-  Runtime configuration dosyaları. Şu an `default.yaml` burada tutulur.
+* `config/`
+  Runtime configuration files. Currently `default.yaml` is stored here.
 
-- `docs/`  
-  Teknik notlar, mimari açıklamalar ve ek dökümanlar.
+* `docs/`
+  Technical notes, architectural explanations, and additional documentation.
 
-- `src/encoder_only_transformer/config/`  
-  Typed config objects, config loading ve validation logic.
+* `src/encoder_only_transformer/config/`
+  Typed config objects, config loading, and validation logic.
 
-- `src/encoder_only_transformer/layers/`  
-  En küçük mimari bileşenler: embedding, attention, feed forward, pooling.
+* `src/encoder_only_transformer/layers/`
+  Smallest architectural components: embedding, attention, feed forward, pooling.
 
-- `src/encoder_only_transformer/blocks/`  
-  Daha büyük yapılar. Şu an `EncoderBlock` burada bulunur.
+* `src/encoder_only_transformer/blocks/`
+  Larger structures. Currently `EncoderBlock` is located here.
 
-- `src/encoder_only_transformer/models/`  
-  Encoder stack, head ve full model burada tutulur.
+* `src/encoder_only_transformer/models/`
+  Encoder stack, head, and full model.
 
-- `src/encoder_only_transformer/factories/`  
+* `src/encoder_only_transformer/factories/`
   Config-driven model construction logic.
 
-- `src/encoder_only_transformer/training/`  
-  Training loop ve metric logic.
+* `src/encoder_only_transformer/training/`
+  Training loop and metric logic.
 
-- `tests/`  
-  Her ana modül için unit test dosyaları.
+* `tests/`
+  Unit test files for each main module.
 
 ---
 
-## Kurulum
+## Setup
 
-Bu projede environment ve dependency yönetimi için **uv** kullanılmaktadır.
+This project uses **uv** for environment and dependency management.
 
-### Gereksinimler
+### Requirements
 
-- Python **3.10**
-- **uv**
+* Python **3.10**
+* **uv**
 
-### Proje kurulumu
+### Project setup
 
 ```bash
 uv sync
 ```
 
-### Testleri çalıştırma
+### Run tests
 
 ```bash
 uv run pytest -v
 ```
 
-### Lint çalıştırma
+### Run lint
 
 ```bash
 uv run ruff check .
@@ -278,51 +278,51 @@ uv run ruff check .
 
 ## Configuration
 
-Bu projede iki ayrı configuration katmanı vardır.
+This project has two separate configuration layers.
 
 ### 1. `pyproject.toml`
 
-Bu dosya aşağıdakiler için kullanılır:
+This file is used for:
 
-- project metadata
-- dependency management
-- pytest configuration
-- ruff configuration
+* project metadata
+* dependency management
+* pytest configuration
+* ruff configuration
 
 ### 2. `config/default.yaml`
 
-Bu dosya model ve training parametrelerini tutar.
+This file stores model and training parameters.
 
-Örnek alanlar:
+Example fields:
 
-- `vocab_size`
-- `max_seq_len`
-- `d_model`
-- `n_heads`
-- `ff_hidden_dim`
-- `dropout`
-- `n_layers`
-- `batch_size`
-- `learning_rate`
-- `weight_decay`
-- `epochs`
+* `vocab_size`
+* `max_seq_len`
+* `d_model`
+* `n_heads`
+* `ff_hidden_dim`
+* `dropout`
+* `n_layers`
+* `batch_size`
+* `learning_rate`
+* `weight_decay`
+* `epochs`
 
-Bu ayrım bilinçlidir. Proje metadata ile deneysel model parametrelerini aynı yerde tutmak yerine iki farklı katmanda yönetmek daha sağlıklıdır.
+This separation is intentional. Managing project metadata and experimental model parameters in separate layers is healthier than keeping them in the same place.
 
 ---
 
-## Nasıl Çalışır
+## How It Works
 
-Repository içindeki temel akış şu şekildedir:
+The main flow in the repository is as follows:
 
-1. **input_ids** alınır
-2. `EncoderInputEmbedding` ile token representation + positional information üretilir
-3. Bu temsil, çok katmanlı `Encoder` içine girer
-4. Encoder çıktısı sequence-level representation’a indirgenir
-5. `SequenceClassificationHead` ile logits üretilir
-6. `SequenceClassificationTrainer` ile loss ve metric hesaplanır
+1. **input_ids** are taken
+2. token representation + positional information is generated with `EncoderInputEmbedding`
+3. this representation is passed into a multi-layer `Encoder`
+4. encoder output is reduced to a sequence-level representation
+5. logits are produced with `SequenceClassificationHead`
+6. loss and metrics are calculated with `SequenceClassificationTrainer`
 
-Kavramsal akış:
+Conceptual flow:
 
 ```text
 input_ids
@@ -337,147 +337,146 @@ input_ids
 
 ---
 
-## Geliştirme Yaklaşımı
+## Development Approach
 
-Bu proje bilinçli olarak **step by step** geliştirilmektedir.
+This project is intentionally developed **step by step**.
 
-Her yeni aşamada şu yaklaşım izlenir:
+At each stage, the following approach is followed:
 
-1. önce ilgili bileşenin amacı netleştirilir
-2. sonra minimal ama doğru implementation yazılır
-3. ardından unit test eklenir
-4. gerekirse kısa teknik açıklama ile dokümante edilir
-5. bir sonraki bileşene ancak önceki yapı anlaşılır hale geldikten sonra geçilir
+1. first, the purpose of the relevant component is clarified
+2. then a minimal but correct implementation is written
+3. then unit tests are added
+4. if necessary, it is documented with a short technical explanation
+5. the next component is only started after the previous structure is well understood
 
-Bu yaklaşımın nedeni şudur:
+The reason for this approach is:
 
-Bir mimariyi anlamaya çalışırken aynı anda çok fazla dosya, çok fazla abstraction ve çok fazla feature görmek öğrenmeyi zorlaştırır. Bu repository’de hızdan çok **anlaşılırlık**, **sorumluluk ayrımı** ve **test edilebilirlik** önemlidir.
+When trying to understand an architecture, seeing too many files, too many abstractions, and too many features at once makes learning difficult. In this repository, speed is less important than **clarity**, **separation of responsibility**, and **testability**.
 
 ---
 
-## Öğrenci / Contributor Workflow
+## Student / Contributor Workflow
 
-Bu repository, sadece bireysel öğrenme için değil; mentor kontrollü contributor geliştirme süreci için de uygundur.
+This repository is suitable not only for individual learning, but also for a mentor-controlled contributor development process.
 
-Önerilen contributor akışı:
+Recommended contributor flow:
 
-1. repository’yi clone et
-2. environment’ı kur
-3. tüm testleri geçir
-4. mevcut mimariyi teknik olarak açıkla
-5. atanmış feature alanında kendi branch’in üzerinde çalış
-6. test ekle
-7. PR aç
-8. review sonrası merge al
+1. clone the repository
+2. set up the environment
+3. pass all tests
+4. technically explain the current architecture
+5. work on your assigned feature area in your own branch
+6. add tests
+7. open a PR
+8. merge after review
 
-### Branch yaklaşımı
+### Branch approach
 
-- `main` yalnızca kontrollü ve temiz sürümler için korunmalıdır
-- contributor’lar feature branch üzerinde çalışmalıdır
+* `main` should be protected for clean and controlled versions
+* contributors should work on feature branches
 
-Örnek branch isimleri:
+Example branch names:
 
-- `feature/data-pipeline`
-- `feature/training-script`
-- `feature/evaluation-metrics`
+* `feature/data-pipeline`
+* `feature/training-script`
+* `feature/evaluation-metrics`
 
-Detaylı contributor ve öğrenci çalışma kuralları için:
+For detailed contributor and student working rules:
 
-- `GUIDE.md`
-- `TASKS.md`
-- `DECISIONS.md`
-- `CHANGELOG.md`
-- `PROJECT_CONTEXT.md`
+Refer to:
 
-dosyalarına bakılmalıdır.
+* `GUIDE.md`
+* `TASKS.md`
+* `DECISIONS.md`
+* `CHANGELOG.md`
+* `PROJECT_CONTEXT.md`
 
 ---
 
 ## Roadmap
 
-### Tamamlanan Ana Aşamalar
+### Completed Main Stages
 
-- project setup
-- config system
-- embeddings
-- attention core
-- feed forward
-- encoder block
-- stacked encoder
-- pooling
-- classification head
-- full model
-- factory layer
-- trainer
-- metrics
-- package refactor
-- test stabilization
+* project setup
+* config system
+* embeddings
+* attention core
+* feed forward
+* encoder block
+* stacked encoder
+* pooling
+* classification head
+* full model
+* factory layer
+* trainer
+* metrics
+* package refactor
+* test stabilization
 
-### Sıradaki Muhtemel Aşamalar
+### Upcoming Possible Stages
 
-- end-to-end training example script
-- toy dataset / dataset utility
-- evaluation script
-- checkpoint save/load
-- daha zengin metrics
-- sentence pair task
-- ablation / pooling comparison experiments
-- docs ve architecture visual improvements
-
----
-
-## Kimler İçin Uygun
-
-Bu repository özellikle şu kişiler için uygundur:
-
-- **Transformer architecture** öğrenmek isteyen öğrenciler
-- teoriyi kodla bağlamak isteyen geliştiriciler
-- derslerinde öğretici bir repo kullanmak isteyen eğitmenler
-- hazır kütüphaneleri kullanmadan önce encoder mimarisinin içini görmek isteyen mühendisler
-
-Bu repo tamamen başlangıç seviyesi için tasarlanmış değildir. En çok faydayı, kod okuyarak öğrenmeye açık ve mimariyi gerçekten anlamak isteyen kişiler alır.
+* end-to-end training example script
+* toy dataset / dataset utility
+* evaluation script
+* checkpoint save/load
+* richer metrics
+* sentence pair task
+* ablation / pooling comparison experiments
+* docs and architecture visual improvements
 
 ---
 
-## Katkı
+## Who Is It For
 
-Bu proje eğitim odaklı bir repository’dir.
+This repository is especially suitable for:
 
-Katkı yapmak isteyenler şu alanlarda katkı sunabilir:
+* students who want to learn **Transformer architecture**
+* developers who want to connect theory with code
+* instructors who want to use an educational repository in their courses
+* engineers who want to understand the internals of encoder architectures before using ready-made libraries
 
-- test kapsamını genişletme
-- training example ekleme
-- metrics iyileştirme
-- docs ve architecture notes geliştirme
-- bug fix
-- küçük deneyler ve analizler
-- contributor workflow iyileştirmeleri
-
-Katkı sunmadan önce repository’nin eğitim odaklı yapısını dikkate alın. Öncelik her zaman:
-
-- anlaşılabilirlik
-- modülerlik
-- test edilebilirlik
-- öğretici değer
-
-olmalıdır.
+This repository is not designed for complete beginners. It is most beneficial for those who are comfortable learning by reading code and want to deeply understand the architecture.
 
 ---
 
-## Lisans
+## Contribution
 
-Bu proje **MIT License** ile paylaşılacaktır.
+This is an education-focused repository.
+
+Those who want to contribute can do so in the following areas:
+
+* expanding test coverage
+* adding training examples
+* improving metrics
+* improving docs and architecture notes
+* bug fixes
+* small experiments and analyses
+* contributor workflow improvements
+
+Before contributing, consider the educational nature of the repository. Priority should always be:
+
+* clarity
+* modularity
+* testability
+* instructional value
 
 ---
 
-## Son Not
+## License
 
-Bu repository’nin amacı sadece çalışan bir model yazmak değildir.
+This project will be shared under the **MIT License**.
 
-Buradaki asıl hedef:
+---
 
-- bir mimariyi görünür hale getirmek
-- bileşenleri tek tek anlamak
-- temiz engineering disiplini göstermek
-- öğrenciyi kademeli olarak daha güçlü AI engineering işlerine hazırlamak
-- ve public olarak gerçekten faydalı bir öğrenme kaynağı oluşturmaktır
+## Final Note
+
+The goal of this repository is not just to write a working model.
+
+The real goal here is:
+
+* to make an architecture visible
+* to understand components one by one
+* to demonstrate clean engineering discipline
+* to gradually prepare learners for more advanced AI engineering work
+* and to create a genuinely useful public learning resource
+
