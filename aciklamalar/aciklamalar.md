@@ -92,9 +92,20 @@ Multi-Head Attention ile model aynı anda farklı ilişkileri öğrenebilir..!
     ↓ Dropout + Residual + LayerNorm
   output (batch, seq_len, d_model)   <- aynı
 ```
+#### NOT →
+- Residual Connection yok olsaydı gradyan tüm yolu geri gitmek zorunda kalabilir ve bu da vanishing gradient sorununa yol açabilirdi.
+  - x → Attention → FFN → output
 
 
-Stacked Encoder:
+- Residual Connection varsa; her residual connection aslında bir **"bypass"** noktası açıyor. Bunun sonucunda gradient ister bypass'tan geçer isterse direkt dönüşümlerden geçebilir hale geliyor..!
+```
+  - x → Attention → (x + attention_out) → FFN → (x + ff_out) → output
+           ↑                                        ↑
+      kısa yol 1                              kısa yol 2
+```
+
+
+### Stacked Encoder:
 - Aynı encoder bloğu N kez üst üste konar.
 - Her bir N encoder bloğu öncekinin çıktısını alıp daha zengin bir temsil üretir.
 ```
