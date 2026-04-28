@@ -125,7 +125,7 @@ Stacked Encoder:
 
 
 ### Classification Head:
-- (self._classifier = nn.Linear(d_model, num_classes) = keras -> Dense(num_classes))
+- `(self._classifier = nn.Linear(d_model, num_classes) = keras -> Dense(num_classes))`
 - Pooling'ten gelen `(batch_size, d_model)` boyutundaki tek vektörü sınıf sayısındaki *logitlere* dönüştürür.
 - Pytorch'da loss function içinde softmax olduğundan ayrıca softmax uygulanmaz..!
 ```
