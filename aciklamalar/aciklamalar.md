@@ -100,8 +100,8 @@ Multi-Head Attention ile model aynı anda farklı ilişkileri öğrenebilir..!
 - Residual Connection varsa; her residual connection aslında bir **"bypass"** noktası açıyor. Bunun sonucunda gradient ister bypass'tan geçer isterse direkt dönüşümlerden geçebilir hale geliyor..!
 ```
   - x → Attention → (x + attention_out) → FFN → (x + ff_out) → output
-           ↑                                        ↑
-      kısa yol 1                              kısa yol 2
+                             ↑                       ↑
+                        kısa yol 1                kısa yol 2
 ```
 
 
