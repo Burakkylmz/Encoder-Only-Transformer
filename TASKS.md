@@ -69,24 +69,24 @@ Each student should work within their own responsibility area. Core files should
 
 #### Core Tasks
 
-* [ ] write `experiments/train_sequence_classification.py`
-* [ ] build model from config
-* [ ] create training loop
-* [ ] add checkpoint save/load support
+* [x] write `experiments/train_sequence_classification.py`
+* [x] build model from config
+* [x] create training loop
+* [x] add checkpoint save/load support
 
 #### Extended Tasks
 
-* [ ] add epoch-based logging
-* [ ] output loss and accuracy
-* [ ] add deterministic training option
-* [ ] add simple evaluation step
+* [x] add epoch-based logging
+* [x] output loss and accuracy
+* [x] add deterministic training option
+* [x] add simple evaluation step
 
 #### Deliverables
 
-* runnable training script
-* training flow with logging
-* checkpoint mechanism
-* simple example run output
+* [x] runnable training script
+* [x] training flow with logging
+* [x] checkpoint mechanism
+* [x] simple example run output
 
 ---
 
@@ -286,4 +286,3 @@ This section includes the general project backlog independent of student tasks.
 
 The purpose of this file is to guide students and make progress visible.
 For reasoning behind technical decisions, refer to `DECISIONS.md`; for project context, refer to `PROJECT_CONTEXT.md`; for working rules, refer to `GUIDE.md`; for important changes, refer to `CHANGELOG.md`.
-
