@@ -479,4 +479,33 @@ The real goal here is:
 * to demonstrate clean engineering discipline
 * to gradually prepare learners for more advanced AI engineering work
 * and to create a genuinely useful public learning resource
+---
+
+## Experiment Script (Student B)
+
+You can run a quick sequence classification training experiment with:
+
+```bash
+python experiments/train_sequence_classification.py \
+  --config config/default.yaml \
+  --num-classes 2 \
+  --epochs 1 \
+  --train-size 8 \
+  --valid-size 4 \
+  --device cpu
+```
+
+This script supports:
+
+* config-driven model creation
+* deterministic runs with `--seed`
+* epoch-level train/eval logging
+* checkpoint save/load with `--checkpoint-path` and `--resume`
+
+Example output:
+
+```text
+epoch=1/1 train_loss=0.69 train_acc=0.50 valid_loss=0.68 valid_acc=0.50
+Training complete. Checkpoint saved at: checkpoints/sequence_classification_latest.pt
+```
 
